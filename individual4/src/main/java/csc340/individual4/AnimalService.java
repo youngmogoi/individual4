@@ -9,41 +9,25 @@ import java.util.List;
 public class AnimalService {
 
     @Autowired
-    private AnimalRepository animalRepository;
+    private csc340.individual4.AnimalRepository repository;
 
-    public List<Animal> getAllAnimals() {
-        return animalRepository.findAll();
+    public List<csc340.individual4.Animal> getAllAnimals() {
+        return repository.findAll();
     }
 
-    public Animal getAnimalById(int animalId) {
-        return animalRepository.findById(animalId).orElse(null);
+    public csc340.individual4.Animal getAnimalById(int id) {
+        return repository.findById(id).orElse(null);
     }
 
-    public List<Animal> getAnimalsBySpecies(String species) {
-        return animalRepository.findBySpecies(species);
+    public void addNewAnimal(csc340.individual4.Animal animal) {
+        repository.save(animal);
     }
 
-    public List<Animal> getAnimalsByNameContaining(String name) {
-        return animalRepository.findByNameContaining(name);
+    public void updateAnimal(csc340.individual4.Animal animal) {
+        repository.save(animal); // save will update if animal already exists
     }
 
-    public void addNewAnimal(Animal animal) {
-        animalRepository.save(animal);
-    }
-
-    public void updateAnimal(int animalId, Animal animal) {
-        Animal existing = getAnimalById(animalId);
-        if (existing != null) {
-            existing.setName(animal.getName());
-            existing.setScientificName(animal.getScientificName());
-            existing.setSpecies(animal.getSpecies());
-            existing.setHabitat(animal.getHabitat());
-            existing.setDescription(animal.getDescription());
-            animalRepository.save(existing);
-        }
-    }
-
-    public void deleteAnimalById(int animalId) {
-        animalRepository.deleteById(animalId);
+    public void deleteAnimal(int id) {
+        repository.deleteById(id);
     }
 }
